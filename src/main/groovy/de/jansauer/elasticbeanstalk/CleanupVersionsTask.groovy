@@ -9,6 +9,8 @@ import software.amazon.awssdk.services.elasticbeanstalk.ElasticBeanstalkClient
 import software.amazon.awssdk.services.elasticbeanstalk.model.DeleteApplicationVersionRequest
 import software.amazon.awssdk.services.elasticbeanstalk.model.DescribeApplicationVersionsRequest
 
+import java.util.regex.Pattern
+
 class CleanupVersionsTask extends DefaultTask {
 
   @Input
@@ -16,6 +18,9 @@ class CleanupVersionsTask extends DefaultTask {
 
   @Input
   final Property<Integer> versionToPreserve = project.objects.property(Integer)
+
+  @Input
+  final Property<Pattern> versionToRemoveRegex = project.objects.property(Pattern)
 
   CleanupVersionsTask() {
     setDescription('Cleanup unused ElasticBeanstalk Application Versions.')
@@ -34,7 +39,7 @@ class CleanupVersionsTask extends DefaultTask {
             .applicationName(applicationName.get())
             .build())
         .applicationVersions()
-        .findAll({ it.versionLabel() ==~ /\d+\.\d+\.\d+-\d+-g.*/ })
+        .findAll({ it.versionLabel() ==~ versionToRemoveRegex.get() })
         .drop(versionToPreserve.get())
         .each {
       client.deleteApplicationVersion(DeleteApplicationVersionRequest.builder()

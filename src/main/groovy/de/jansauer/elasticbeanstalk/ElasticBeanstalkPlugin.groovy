@@ -10,6 +10,7 @@ class ElasticBeanstalkPlugin implements Plugin<Project> {
     target.tasks.create('cleanupVersions', CleanupVersionsTask) {
       applicationName = extension.applicationName
       versionToPreserve = extension.versionToPreserve
+      versionToRemoveRegex = extension.versionToRemoveRegex
     }
   }
 }

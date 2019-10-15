@@ -14,6 +14,19 @@ Author: Jan Sauer
 Author: Stefan Kirstein
 <[stefan-kirstein@gmx.net](mailto:stefan-kirstein@gmx.net)>
 
+## Configuration
+```groovy
+elasticBeanstalk {
+  applicationName = 'test-hello-world-app'
+  versionToPreserve = 5
+  versionToRemoveRegex = /\d+\.\d+\.\d+-\d+-g.*/
+}
+```
+
+### Default Configuration:
+`versionToPreserve = 8` 
+`versionToRemoveRegex = /\d+\.\d+\.\d+-\d+-g.*/` 
+
 
 ```text
 Copyright 2018, Jan Sauer <jan@jansauer.de> (https://jansauer.de)

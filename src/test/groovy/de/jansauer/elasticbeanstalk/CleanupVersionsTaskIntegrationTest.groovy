@@ -18,7 +18,7 @@ import spock.lang.Specification
 
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
-class CleanupVersionsTest extends Specification {
+class CleanupVersionsTaskIntegrationTest extends Specification {
 
   @Shared
   String applicationName
