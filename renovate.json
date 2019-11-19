@@ -3,5 +3,13 @@
   "rangeStrategy": "pin",
   "gradle": {
     "enabled": true
-  }
+  },
+  "packageRules": [
+    {
+      "groupName": "com.amazonaws:aws-java-sdk",
+      "packagePatterns": [
+        "^com.amazonaws:aws-java-sdk"
+      ]
+    }
+  ]
 }
