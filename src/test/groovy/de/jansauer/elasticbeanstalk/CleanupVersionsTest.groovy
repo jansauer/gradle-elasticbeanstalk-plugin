@@ -18,6 +18,8 @@ import spock.lang.Specification
 
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
+import spock.lang.Unroll
+
 class CleanupVersionsTest extends Specification {
 
   @Shared
@@ -62,6 +64,7 @@ class CleanupVersionsTest extends Specification {
     buildFile = testProjectDir.newFile('build.gradle')
   }
 
+  @Unroll
   def "should cleanup old application versions"() {
     given:
     buildFile << """
@@ -101,7 +104,7 @@ class CleanupVersionsTest extends Specification {
     }) == ['1.0.0', '20.10.1-5-g4b03a14', '1.5.20-21-g4b03a14', '0.0.0']
 
     where:
-    gradleVersion << ['4.10', '4.10.1', '4.10.2', '5.0', '4.10.3', '5.1', '5.1.1']
+    gradleVersion << ['4.10', '4.10.1', '4.10.2', '5.0', '4.10.3', '5.1', '5.1.1', '5.2', '5.2.1', '5.3', '5.3.1', '5.4', '5.4.1', '5.5', '5.5.1', '5.6', '5.6.1', '5.6.2', '5.6.3', '5.6.4', '6.0', '6.0.1']
   }
 
   def cleanupSpec() {
