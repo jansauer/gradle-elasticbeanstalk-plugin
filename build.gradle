@@ -18,10 +18,10 @@ repositories {
 }
 
 dependencies {
-    compile 'software.amazon.awssdk:elasticbeanstalk:2.3.0'
-    compile 'software.amazon.awssdk:s3:2.3.0'
+    implementation 'software.amazon.awssdk:elasticbeanstalk:2.3.0'
+    implementation 'software.amazon.awssdk:s3:2.3.0'
 
-    testCompile('org.spockframework:spock-core:1.2-groovy-2.5') {
+    testImplementation('org.spockframework:spock-core:1.2-groovy-2.5') {
         exclude(module: 'groovy-all')
     }
 }
