@@ -6,9 +6,9 @@
   },
   "packageRules": [
     {
-      "groupName": "com.amazonaws:aws-java-sdk",
+      "groupName": "software.amazon.awssdk",
       "packagePatterns": [
-        "^com.amazonaws:aws-java-sdk"
+        "^software.amazon.awssdk"
       ]
     }
   ]
