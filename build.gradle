@@ -1,52 +1,64 @@
 plugins {
-    id 'com.palantir.git-version' version '0.12.2'
-    id 'groovy'
-    id 'java-gradle-plugin'
-    id 'jacoco'
-    id 'com.gradle.plugin-publish' version '0.10.1'
+  id 'com.palantir.git-version' version '0.12.3'
+  id 'groovy'
+  id 'java-gradle-plugin'
+  id 'jacoco'
+  id 'com.gradle.plugin-publish' version '0.11.0'
 }
 
 description = 'Gradle AWS Elastic Beanstalk plugin'
-group = 'de.jansauer.aws.beanstalk'
+group = 'de.jansauer.elasticbeanstalk'
 version = gitVersion()
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    mavenCentral()
+  mavenCentral()
+  jcenter()
 }
 
 dependencies {
-    implementation 'software.amazon.awssdk:elasticbeanstalk:2.10.20'
-    implementation 'software.amazon.awssdk:s3:2.10.20'
+  implementation 'software.amazon.awssdk:elasticbeanstalk:2.13.11'
+  implementation 'software.amazon.awssdk:s3:2.13.11'
+//  implementation 'org.ajoberstar.grgit:grgit-core:3.1.1'
+  implementation 'org.ajoberstar.grgit:grgit-core:4.0.2'
 
-    testImplementation('org.spockframework:spock-core:1.3-groovy-2.5') {
-        exclude(module: 'groovy-all')
+  testImplementation('org.spockframework:spock-core:1.3-groovy-2.5') {
+    exclude(module: 'groovy-all')
+  }
+}
+
+gradlePlugin {
+  plugins {
+    elasticBeanstalkPlugin {
+      id = 'de.jansauer.elasticbeanstalk'
+      implementationClass = 'de.jansauer.elasticbeanstalk.ElasticBeanstalkPlugin'
     }
+  }
 }
 
 pluginBundle {
-    website = 'https://github.com/jansauer/gradle-elasticbeanstalk-plugin'
-    vcsUrl = 'https://github.com/jansauer/gradle-elasticbeanstalk-plugin'
-    description = 'Gradle Elastic Beanstalk plugin.'
-    tags = ['deployment', 'amazon', 'aws', 'elasticbeanstalk', 'gitlab', 'clean', 'versions']
+  website = 'https://github.com/jansauer/gradle-elasticbeanstalk-plugin'
+  vcsUrl = 'https://github.com/jansauer/gradle-elasticbeanstalk-plugin'
+  description = 'Gradle Elastic Beanstalk plugin.'
+  tags = ['deployment', 'amazon', 'aws', 'elasticbeanstalk', 'gitlab', 'clean', 'versions']
 
-    plugins {
-        elasticBeanstalkPlugin {
-            id = 'de.jansauer.elasticbeanstalk'
-            displayName = 'Gradle Elastic Beanstalk plugin'
-        }
+  plugins {
+    elasticBeanstalkPlugin {
+      id = 'de.jansauer.elasticbeanstalk'
+      displayName = 'Gradle Elastic Beanstalk plugin'
     }
+  }
 }
 
 task codeCoverageReport(type: JacocoReport) {
-    executionData fileTree(project.rootDir.absolutePath).include('**/build/jacoco/*.exec')
-    sourceSets sourceSets.main
+  executionData fileTree(project.rootDir.absolutePath).include('**/build/jacoco/*.exec')
+  sourceSets sourceSets.main
 
-    reports {
-        xml.enabled true
-        xml.destination file("${buildDir}/reports/jacoco/report.xml")
-        html.enabled false
-    }
+  reports {
+    xml.enabled true
+    xml.destination file("${buildDir}/reports/jacoco/report.xml")
+    html.enabled false
+  }
 }

@@ -1,2 +1,1 @@
-rootProject.name = 'elasticbeanstalk'
-
+rootProject.name = 'gradle-elasticbeanstalk-plugin'

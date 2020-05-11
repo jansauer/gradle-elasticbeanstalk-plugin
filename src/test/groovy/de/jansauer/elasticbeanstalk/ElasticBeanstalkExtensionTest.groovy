@@ -6,14 +6,14 @@ import spock.lang.Specification
 
 class ElasticBeanstalkExtensionTest extends Specification {
 
-  def "should keep last 8 versions on default"() {
+  def "should have some extension defaults"() {
     when:
     Project project = ProjectBuilder.builder().withName("hello-world").build()
     project.pluginManager.apply ElasticBeanstalkPlugin
-    def test = project.extensions.elasticBeanstalk.versionToPreserve
 
     then:
     project.extensions.elasticBeanstalk instanceof ElasticBeanstalkExtension
-    project.extensions.elasticBeanstalk.versionToPreserve.get() == 8
+    project.extensions.elasticBeanstalk.versionDescription.get() == ''
+    project.extensions.elasticBeanstalk.versionsToPreserve.get() == 30
   }
 }

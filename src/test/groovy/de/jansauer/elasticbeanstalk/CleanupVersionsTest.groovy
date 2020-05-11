@@ -73,8 +73,9 @@ class CleanupVersionsTest extends Specification {
         }
         
         elasticBeanstalk {
-          applicationName = 'Gradle Plugin Test'
-          versionToPreserve = 2
+          region = 'eu-central-1'
+          application = '${applicationName}'
+          versionsToPreserve = 2
         }
     """
 
@@ -82,14 +83,14 @@ class CleanupVersionsTest extends Specification {
     def result = GradleRunner.create()
         .withGradleVersion(gradleVersion)
         .withProjectDir(testProjectDir.root)
-        .withArguments('cleanupVersions')
+        .withArguments('CleanupVersions')
         .withDebug(true)
         .withPluginClasspath()
         .build()
     print result.output
 
     then:
-    result.task(':cleanupVersions').outcome == SUCCESS
+    result.task(':CleanupVersions').outcome == SUCCESS
 
     when:
     def remainingVersions = ebClient.describeApplicationVersions(DescribeApplicationVersionsRequest.builder()
@@ -98,13 +99,13 @@ class CleanupVersionsTest extends Specification {
         .applicationVersions()
 
     then:
-    remainingVersions.size() == 4
+    remainingVersions.size() == 2
     remainingVersions.collectNested({
       it.versionLabel
-    }) == ['1.0.0', '20.10.1-5-g4b03a14', '1.5.20-21-g4b03a14', '0.0.0']
+    }) == ['1.0.0', '20.10.1-5-g4b03a14']
 
     where:
-    gradleVersion << ['4.10', '4.10.1', '4.10.2', '5.0', '4.10.3', '5.1', '5.1.1', '5.2', '5.2.1', '5.3', '5.3.1', '5.4', '5.4.1', '5.5', '5.5.1', '5.6', '5.6.1', '5.6.2', '5.6.3', '5.6.4', '6.0', '6.0.1']
+    gradleVersion << ['6.0', '6.0.1']
   }
 
   def cleanupSpec() {
