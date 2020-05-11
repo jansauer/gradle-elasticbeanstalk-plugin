@@ -28,7 +28,7 @@ jobs:
     - run: bash <(curl -s https://codecov.io/bash)
   deploy:
     docker:
-    - image: circleci/openjdk:8-jdk
+    - image: circleci/openjdk:11-jdk
     steps:
     - checkout
     - restore_cache:
@@ -49,7 +49,7 @@ workflows:
     - build:
         filters:
           tags:
-            only: /^\d+\.\d+\.\d+$/
+            only: /^\d+\.\d+\.\d+(-rc\d+)?$/
     - deploy:
         requires:
           - build
@@ -57,4 +57,4 @@ workflows:
           branches:
             ignore: /.*/
           tags:
-            only: /^\d+\.\d+\.\d+$/
+            only: /^\d+\.\d+\.\d+(-rc\d+)?$/
